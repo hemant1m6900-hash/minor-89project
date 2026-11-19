@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — AI E-Commerce Intelligence</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-sidebar" class="sidebar"></aside>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title">Executive Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" id="refresh-dashboard-btn" class="btn btn-outline btn-sm">Refresh</button>
+          <a href="/frontend/csv-upload.html" class="btn btn-primary btn-sm">Upload CSV</a>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div id="dashboard-alert-slot"></div>
+
+        <section class="kpi-grid" id="dashboard-kpis">
+          <div class="kpi-card"><span class="kpi-label">Total Revenue</span><span class="kpi-value skeleton" style="width: 110px; height: 28px;"></span></div>
+          <div class="kpi-card"><span class="kpi-label">Total Orders</span><span class="kpi-value skeleton" style="width: 80px; height: 28px;"></span></div>
+          <div class="kpi-card"><span class="kpi-label">Total Customers</span><span class="kpi-value skeleton" style="width: 80px; height: 28px;"></span></div>
+          <div class="kpi-card"><span class="kpi-label">Total Products</span><span class="kpi-value skeleton" style="width: 80px; height: 28px;"></span></div>
+          <div class="kpi-card"><span class="kpi-label">Average Order Value</span><span class="kpi-value skeleton" style="width: 90px; height: 28px;"></span></div>
+        </section>
+
+        <div id="dashboard-empty-slot"></div>
+
+        <section id="dashboard-charts-section" class="grid-sidebar-split" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Monthly Sales &amp; Revenue Trend</h2>
+                <p class="card-subtitle">Aggregated directly from imported SQLite transactions</p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="dashboard-trend-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Category Performance</h2>
+                <p class="card-subtitle">Revenue distribution across product categories</p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="dashboard-category-chart"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <section id="dashboard-tables-section" class="grid-2" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Top Products</h2>
+                <p class="card-subtitle">Ranked by realized revenue and units sold</p>
+              </div>
+              <a href="/frontend/sales-analytics.html" class="btn btn-outline btn-sm">Full Analytics</a>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th class="num">Units</th>
+                    <th class="num">Revenue</th>
+                  </tr>
+                </thead>
+                <tbody id="top-products-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Recent Transactions</h2>
+                <p class="card-subtitle">Latest imported orders and sales entries</p>
+              </div>
+              <a href="/frontend/data-management.html" class="btn btn-outline btn-sm">Manage Data</a>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Reference</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th class="num">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-txns-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+  <script src="/frontend/js/layout.js"></script>
+  <script src="/frontend/js/charts.js"></script>
+  <script src="/frontend/js/pages/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — AI E-Commerce Intelligence</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-sidebar" class="sidebar"></aside>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title">System &amp; Analytics Settings</h1>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div id="settings-alert-slot"></div>
+
+        <section class="grid-2">
+          <form id="thresholds-form" class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">ML &amp; Alert Thresholds</h2>
+                <p class="card-subtitle">Persisted in SQLite analytics metadata for segmentation, forecasting, and alerts</p>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="set-low-stock">Default Low Stock Threshold</label>
+                <input type="number" id="set-low-stock" class="form-control num" min="1" max="10000" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="set-at-risk-days">At-Risk Inactivity (Days)</label>
+                <input type="number" id="set-at-risk-days" class="form-control num" min="7" max="730" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="set-rfm-clusters">Default K-Means Clusters</label>
+                <select id="set-rfm-clusters" class="form-control">
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="set-forecast-horizon">Default Forecast Horizon</label>
+                <input type="number" id="set-forecast-horizon" class="form-control num" min="1" max="12" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="set-anomaly-z">Anomaly Z-Score Threshold</label>
+                <input type="number" step="0.1" id="set-anomaly-z" class="form-control num" min="1.2" max="5.0" required />
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Save Analytics Settings</button>
+            </div>
+          </form>
+
+          <form id="password-form" class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Account &amp; Password</h2>
+                <p class="card-subtitle">Signed-in analyst credentials &amp; backend endpoint configuration</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="set-account-email">Signed-in Email</label>
+              <input type="email" id="set-account-email" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="set-current-pw">Current Password</label>
+              <input type="password" id="set-current-pw" class="form-control" required minlength="6" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="set-new-pw">New Password</label>
+              <input type="password" id="set-new-pw" class="form-control" required minlength="6" />
+            </div>
+            <div>
+              <button type="submit" class="btn btn-navy">Update Password</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">SQLite &amp; Runtime Information</h2>
+              <p class="card-subtitle">Live database connection check and API endpoint configuration</p>
+            </div>
+          </div>
+          <div class="grid-3" id="system-info-grid"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+  <script src="/frontend/js/layout.js"></script>
+  <script src="/frontend/js/pages/settings.js"></script>
+</body>
+</html>

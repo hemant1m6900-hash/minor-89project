@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Analytics — AI E-Commerce Intelligence</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-sidebar" class="sidebar"></aside>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title">Sales Analytics</h1>
+        </div>
+        <div class="topbar-actions">
+          <a href="/frontend/reports.html" class="btn btn-outline btn-sm">Export Reports</a>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <form id="sales-filter-form" class="filter-bar">
+          <div class="form-group">
+            <label class="form-label" for="sales-start-date">Start Date</label>
+            <input type="date" id="sales-start-date" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sales-end-date">End Date</label>
+            <input type="date" id="sales-end-date" class="form-control" />
+          </div>
+          <div class="form-group" style="min-width: 180px;">
+            <label class="form-label" for="sales-category">Category</label>
+            <select id="sales-category" class="form-control">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sales-granularity">Granularity</label>
+            <select id="sales-granularity" class="form-control">
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+              <option value="daily">Daily</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Apply Filters</button>
+          <button type="button" id="sales-reset-btn" class="btn btn-outline">Reset</button>
+        </form>
+
+        <div id="sales-alert-slot"></div>
+        <div id="sales-empty-slot"></div>
+
+        <section id="sales-content" style="display: none; flex-direction: column; gap: 20px;">
+          <div class="kpi-grid-4" id="sales-kpis"></div>
+
+          <div class="grid-sidebar-split">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Revenue &amp; Order Velocity</h2>
+                  <p class="card-subtitle">Filtered time-series progression</p>
+                </div>
+              </div>
+              <div class="chart-container tall">
+                <canvas id="sales-trend-chart"></canvas>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Revenue by Category</h2>
+                  <p class="card-subtitle">Share of revenue and units sold</p>
+                </div>
+              </div>
+              <div class="chart-container tall">
+                <canvas id="sales-category-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Product Revenue Breakdown</h2>
+                <p class="card-subtitle">Top performing products within selected filters</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th class="num">Units Sold</th>
+                    <th class="num">Avg Price</th>
+                    <th class="num">Total Revenue</th>
+                  </tr>
+                </thead>
+                <tbody id="sales-products-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Filtered Transactions</h2>
+                <p class="card-subtitle">Most recent 50 matching records</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Order / Ref</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th class="num">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="sales-orders-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+  <script src="/frontend/js/layout.js"></script>
+  <script src="/frontend/js/charts.js"></script>
+  <script src="/frontend/js/pages/sales-analytics.js"></script>
+</body>
+</html>

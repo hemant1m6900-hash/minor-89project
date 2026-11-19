@@ -1,0 +1,8 @@
+{
+  "name": "AI E-Commerce Intelligence System",
+  "description": "Enterprise e-commerce analytics, CSV ingestion, RFM customer segmentation, demand forecasting, smart alerts, and reporting system powered by FastAPI, PostgreSQL, and Scikit-learn.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

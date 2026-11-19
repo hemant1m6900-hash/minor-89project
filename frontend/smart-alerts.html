@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Alerts — AI E-Commerce Intelligence</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-sidebar" class="sidebar"></aside>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title">Smart Alerts &amp; Automated Insights</h1>
+        </div>
+        <div class="topbar-actions">
+          <select id="alerts-category-filter" class="form-control" style="height: 34px;">
+            <option value="">All Insight Categories</option>
+            <option value="sales_trend">Sales Trends</option>
+            <option value="product_performance">Top Products</option>
+            <option value="customer_churn">At-Risk Customers</option>
+            <option value="anomaly">Unusual Anomalies</option>
+            <option value="inventory">Low Inventory</option>
+          </select>
+          <button type="button" id="btn-refresh-alerts" class="btn btn-primary btn-sm">Re-Evaluate Rules</button>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div id="alerts-slot-banner"></div>
+        <div class="kpi-grid-4" id="alerts-kpis"></div>
+        <div id="alerts-empty-slot"></div>
+        <section id="alerts-list" style="display: flex; flex-direction: column; gap: 14px;"></section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+  <script src="/frontend/js/layout.js"></script>
+  <script src="/frontend/js/pages/smart-alerts.js"></script>
+</body>
+</html>

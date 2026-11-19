@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSV Upload — AI E-Commerce Intelligence</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-sidebar" class="sidebar"></aside>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title">CSV Upload &amp; Schema Ingestion</h1>
+        </div>
+        <div class="topbar-actions">
+          <a href="/frontend/data-management.html" class="btn btn-outline btn-sm">Dataset History</a>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div class="stepper">
+          <div class="step-item active" id="step-ind-1">1. Upload CSV</div>
+          <div class="step-item" id="step-ind-2">2. Preview &amp; Quality Audit</div>
+          <div class="step-item" id="step-ind-3">3. Column Mapping &amp; Cleaning</div>
+          <div class="step-item" id="step-ind-4">4. Import Result</div>
+        </div>
+
+        <div id="upload-alert-slot"></div>
+
+        <!-- Step 1: Select File -->
+        <section id="upload-step-1" class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Upload Local CSV File</h2>
+              <p class="card-subtitle">
+                Supports products, customers, orders, sales, transactions, and inventory CSVs. Original files are preserved locally and hashed to block duplicate imports.
+              </p>
+            </div>
+          </div>
+          <div id="csv-dropzone" class="dropzone" tabindex="0">
+            <input type="file" id="csv-file-input" accept=".csv,text/csv" style="display: none;" />
+            <p style="font-size: 15px; font-weight: 700; margin: 0 0 6px;">Drop your CSV file here or click to browse</p>
+            <p style="font-size: 13px; color: var(--navy-72); margin: 0;" id="selected-file-label">Accepted format: UTF-8 / Latin-1 CSV files up to 50 MB</p>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+            <div class="form-group" style="min-width: 260px;">
+              <label class="form-label" for="dataset-name-input">Dataset Label (Optional)</label>
+              <input class="form-control" id="dataset-name-input" type="text" placeholder="e.g., Q4 Orders Export" />
+            </div>
+            <button type="button" id="btn-upload-analyze" class="btn btn-primary" disabled>Upload &amp; Inspect Schema</button>
+          </div>
+        </section>
+
+        <!-- Step 2 & 3: Profile, Preview, Mapping, Cleaning -->
+        <section id="upload-step-2" style="display: none; flex-direction: column; gap: 20px;">
+          <div class="kpi-grid-4" id="profile-summary-kpis"></div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Detected Columns &amp; Data Quality Audit</h2>
+                <p class="card-subtitle" id="classification-subtitle"></p>
+              </div>
+              <div class="form-group" style="min-width: 220px;">
+                <label class="form-label" for="dataset-type-select">Dataset Classification</label>
+                <select id="dataset-type-select" class="form-control">
+                  <option value="orders">Orders</option>
+                  <option value="sales">Sales</option>
+                  <option value="transactions">Transactions</option>
+                  <option value="products">Products</option>
+                  <option value="customers">Customers</option>
+                  <option value="inventory">Inventory</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>CSV Column</th>
+                    <th>Detected Type</th>
+                    <th class="num">Missing</th>
+                    <th class="num">Unique</th>
+                    <th>Sample Values</th>
+                    <th>Map to Canonical Field</th>
+                  </tr>
+                </thead>
+                <tbody id="column-mapping-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Data Cleaning &amp; Validation Rules</h2>
+                <p class="card-subtitle">Configure preprocessing before committing normalized rows into SQLite</p>
+              </div>
+            </div>
+            <div class="grid-3">
+              <div class="form-group">
+                <label class="form-label" for="clean-missing-numeric">Missing Numeric Values</label>
+                <select id="clean-missing-numeric" class="form-control">
+                  <option value="zero">Replace with 0 (when optional)</option>
+                  <option value="median">Impute with Column Median</option>
+                  <option value="drop">Drop Rows Missing Mapped Numbers</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="clean-missing-text">Missing Text Values</label>
+                <select id="clean-missing-text" class="form-control">
+                  <option value="unknown">Fill with "Unknown" (optional fields)</option>
+                  <option value="empty">Keep Null / Empty</option>
+                  <option value="drop">Drop Rows Missing Mapped Text</option>
+                </select>
+              </div>
+              <div class="form-group" style="justify-content: flex-end; gap: 10px;">
+                <label class="checkbox-row">
+                  <input type="checkbox" id="clean-drop-duplicates" checked />
+                  <span>Remove exact duplicate rows</span>
+                </label>
+                <label class="checkbox-row">
+                  <input type="checkbox" id="clean-trim-whitespace" checked />
+                  <span>Trim whitespace &amp; currency symbols</span>
+                </label>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <button type="button" id="btn-reset-upload" class="btn btn-outline">Start Over</button>
+              <button type="button" id="btn-run-import" class="btn btn-primary">Validate &amp; Import to SQLite</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Raw CSV Preview (First 20 Rows)</h2>
+                <p class="card-subtitle">Inspect unedited values from the preserved file</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table" id="raw-preview-table"></table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step 4: Import Result -->
+        <section id="upload-step-4" class="card" style="display: none;">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Import Completed</h2>
+              <p class="card-subtitle" id="import-result-subtitle"></p>
+            </div>
+            <span class="status-label pink" id="import-result-status">IMPORTED</span>
+          </div>
+          <div class="kpi-grid-4" id="import-result-kpis"></div>
+          <div id="import-warnings-box"></div>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="/frontend/dashboard.html" class="btn btn-primary">Open Dashboard</a>
+            <a href="/frontend/data-management.html" class="btn btn-outline">View Dataset History</a>
+            <button type="button" id="btn-upload-another" class="btn btn-outline">Upload Another CSV</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+  <script src="/frontend/js/layout.js"></script>
+  <script src="/frontend/js/pages/csv-upload.js"></script>
+</body>
+</html>

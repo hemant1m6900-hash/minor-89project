@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Segmentation — AI E-Commerce Intelligence</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-sidebar" class="sidebar"></aside>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title">RFM Customer Segmentation (K-Means)</h1>
+        </div>
+        <div class="topbar-actions">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="rfm-clusters-select" style="font-size: 12.5px; font-weight: 600;">Clusters:</label>
+            <select id="rfm-clusters-select" class="form-control" style="height: 34px; width: 72px;">
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5" selected>5</option>
+            </select>
+          </div>
+          <button type="button" id="btn-run-rfm" class="btn btn-primary btn-sm">Run K-Means RFM</button>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div id="rfm-alert-slot"></div>
+        <div id="rfm-empty-slot"></div>
+
+        <section id="rfm-content" style="display: none; flex-direction: column; gap: 20px;">
+          <div class="kpi-grid-4" id="rfm-kpis"></div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Customers &amp; Revenue by Segment</h2>
+                  <p class="card-subtitle">K-Means cluster distribution</p>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="rfm-segment-bar-chart"></canvas>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Recency vs Monetary Value</h2>
+                  <p class="card-subtitle">Customer RFM scatter distribution</p>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="rfm-scatter-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Segment Summary</h2>
+                <p class="card-subtitle">Average Recency (days), Frequency (orders), and Monetary ($) per cohort</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Segment</th>
+                    <th class="num">Customers</th>
+                    <th class="num">Total Revenue</th>
+                    <th class="num">Revenue Share</th>
+                    <th class="num">Avg Recency (Days)</th>
+                    <th class="num">Avg Frequency</th>
+                    <th class="num">Avg Monetary</th>
+                  </tr>
+                </thead>
+                <tbody id="rfm-segments-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Customer RFM Ledger</h2>
+                <p class="card-subtitle">Filter by segment or search customer name/ID</p>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <select id="rfm-filter-segment" class="form-control" style="height: 34px;">
+                  <option value="">All Segments</option>
+                </select>
+                <input type="search" id="rfm-search-input" class="form-control" style="height: 34px;" placeholder="Search customer..." />
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Customer</th>
+                    <th>Email / ID</th>
+                    <th>Segment</th>
+                    <th class="num">Recency (Days)</th>
+                    <th class="num">Frequency</th>
+                    <th class="num">Monetary</th>
+                  </tr>
+                </thead>
+                <tbody id="rfm-customers-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+  <script src="/frontend/js/layout.js"></script>
+  <script src="/frontend/js/charts.js"></script>
+  <script src="/frontend/js/pages/customer-segmentation.js"></script>
+</body>
+</html>

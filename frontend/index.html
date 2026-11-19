@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — AI E-Commerce Intelligence System</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-brand-panel">
+      <div>
+        <div class="brand-mark" style="margin-bottom: 48px;">
+          <span class="brand-accent"></span>
+          <span>CommerceIQ</span>
+        </div>
+        <h1 class="auth-hero-title">Enterprise E-Commerce Intelligence Powered by Your CSV Data</h1>
+        <p class="auth-hero-copy">
+          Ingest multi-schema CSV datasets into SQLite, uncover RFM customer segments with K-Means clustering,
+          evaluate Scikit-learn demand forecasts, and export executive PDF &amp; CSV reports locally.
+        </p>
+        <div class="auth-feature-list">
+          <div class="auth-feature-item">
+            <strong>Schema-Aware CSV Pipeline</strong>
+            <span>Auto-detects columns, cleans missing values, and prevents duplicate imports.</span>
+          </div>
+          <div class="auth-feature-item">
+            <strong>K-Means RFM Segmentation</strong>
+            <span>Scores Recency, Frequency, and Monetary cohorts on real order history.</span>
+          </div>
+          <div class="auth-feature-item">
+            <strong>Validated Demand Forecasting</strong>
+            <span>Compares Moving Average baselines against Scikit-learn regression with MAE/RMSE.</span>
+          </div>
+          <div class="auth-feature-item">
+            <strong>Local SQLite Storage</strong>
+            <span>Preserves original CSV files and normalizes records without external APIs.</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 12.5px; color: rgba(255,255,255,0.65);">
+        Local Edition · FastAPI + SQLite + Scikit-learn
+      </div>
+    </section>
+
+    <section class="auth-form-panel">
+      <div class="auth-card">
+        <div>
+          <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 700;">Analyst Access</h2>
+          <p style="margin: 0; color: var(--navy-72); font-size: 13.5px;">
+            Sign in with your account or register a new local analyst profile.
+          </p>
+        </div>
+
+        <div class="tab-switch" role="tablist">
+          <button type="button" id="tab-login" class="active" role="tab">Sign In</button>
+          <button type="button" id="tab-register" role="tab">Create Account</button>
+        </div>
+
+        <div id="auth-error" class="notice-banner pink" style="display: none;"></div>
+
+        <form id="login-form" style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input class="form-control" id="login-email" type="email" required placeholder="analyst@company.local" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input class="form-control" id="login-password" type="password" required minlength="6" placeholder="Minimum 6 characters" />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; height: 42px; margin-top: 4px;">Sign In</button>
+        </form>
+
+        <form id="register-form" style="display: none; flex-direction: column; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name</label>
+            <input class="form-control" id="reg-name" type="text" required placeholder="Alex Morgan" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address</label>
+            <input class="form-control" id="reg-email" type="email" required placeholder="analyst@company.local" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password</label>
+            <input class="form-control" id="reg-password" type="password" required minlength="6" placeholder="Minimum 6 characters" />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; height: 42px; margin-top: 4px;">Create Account</button>
+        </form>
+
+        <div style="border-top: 1px solid var(--navy-12); padding-top: 14px;">
+          <div class="form-group">
+            <label class="form-label" for="login-api-base">Backend Server URL</label>
+            <input class="form-control mono" id="login-api-base" type="url" placeholder="http://127.0.0.1:8000" />
+            <span class="form-hint" id="backend-status-hint">Default is same-origin on port 8000 or http://127.0.0.1:8000.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+</body>
+</html>

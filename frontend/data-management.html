@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Management — AI E-Commerce Intelligence</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-sidebar" class="sidebar"></aside>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title">Data Management &amp; Dataset History</h1>
+        </div>
+        <div class="topbar-actions">
+          <a href="/frontend/csv-upload.html" class="btn btn-primary btn-sm">Upload New CSV</a>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <div id="dm-alert-slot"></div>
+
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Analytics Module Readiness</h2>
+              <p class="card-subtitle">Live audit of SQLite tables and required semantic columns</p>
+            </div>
+          </div>
+          <div class="kpi-grid-4" id="capabilities-grid"></div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Uploaded Datasets &amp; Preserved CSV History</h2>
+              <p class="card-subtitle">Inspect schema profiles, re-map &amp; re-import original files, or delete datasets cleanly</p>
+            </div>
+            <button type="button" id="dm-refresh-btn" class="btn btn-outline btn-sm">Refresh</button>
+          </div>
+          <div id="dm-table-slot"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Preview / Schema Modal -->
+  <div id="dataset-detail-modal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title" id="modal-dataset-title">Dataset Details</h3>
+          <p class="card-subtitle" id="modal-dataset-sub"></p>
+        </div>
+        <button type="button" id="modal-close-btn" class="btn btn-outline btn-sm">Close</button>
+      </div>
+      <div id="modal-dataset-body"></div>
+    </div>
+  </div>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+  <script src="/frontend/js/layout.js"></script>
+  <script src="/frontend/js/pages/data-management.js"></script>
+</body>
+</html>

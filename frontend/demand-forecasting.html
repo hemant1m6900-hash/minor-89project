@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demand Forecasting — AI E-Commerce Intelligence</title>
+  <link rel="stylesheet" href="/frontend/css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside id="app-sidebar" class="sidebar"></aside>
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title">Product Demand Forecasting</h1>
+        </div>
+        <div class="topbar-actions">
+          <a href="/frontend/reports.html" class="btn btn-outline btn-sm">Export Forecasts</a>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <form id="forecast-controls-form" class="filter-bar">
+          <div class="form-group" style="min-width: 240px;">
+            <label class="form-label" for="forecast-product-select">Target Product</label>
+            <select id="forecast-product-select" class="form-control">
+              <option value="">All Eligible Products (Aggregate)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="forecast-granularity">Time Granularity</label>
+            <select id="forecast-granularity" class="form-control">
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="forecast-horizon">Horizon (Periods)</label>
+            <select id="forecast-horizon" class="form-control">
+              <option value="3">3 Periods</option>
+              <option value="4" selected>4 Periods</option>
+              <option value="6">6 Periods</option>
+              <option value="8">8 Periods</option>
+            </select>
+          </div>
+          <button type="submit" id="btn-run-forecast" class="btn btn-primary">Generate Forecast</button>
+        </form>
+
+        <div id="forecast-alert-slot"></div>
+        <div id="forecast-empty-slot"></div>
+
+        <section id="forecast-content" style="display: none; flex-direction: column; gap: 20px;">
+          <div class="kpi-grid-4" id="forecast-kpis"></div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Actual vs Predicted Demand</h2>
+                <p class="card-subtitle" id="forecast-chart-sub"></p>
+              </div>
+              <span class="status-label pink" id="forecast-model-badge">MODEL</span>
+            </div>
+            <div class="chart-container tall">
+              <canvas id="forecast-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Projected Future Periods</h2>
+                  <p class="card-subtitle">Forecasted unit demand for upcoming horizon</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Period</th>
+                      <th class="num">Predicted Units</th>
+                      <th>Method</th>
+                    </tr>
+                  </thead>
+                  <tbody id="forecast-future-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2 class="card-title">Per-Product Forecast Summary</h2>
+                  <p class="card-subtitle">Click a product row to inspect its dedicated model</p>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th class="num">Periods</th>
+                      <th>Model Used</th>
+                      <th class="num">Next Period</th>
+                      <th class="num">MAE</th>
+                    </tr>
+                  </thead>
+                  <tbody id="forecast-products-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/frontend/js/api.js"></script>
+  <script src="/frontend/js/auth.js"></script>
+  <script src="/frontend/js/layout.js"></script>
+  <script src="/frontend/js/charts.js"></script>
+  <script src="/frontend/js/pages/demand-forecasting.js"></script>
+</body>
+</html>
